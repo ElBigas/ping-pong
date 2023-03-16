@@ -95,7 +95,15 @@ const bola = {
         this.direcaoY *= -1
     },
 
+    aumentaVelocidade: function() {
+        this.velocidade += 2
+    },
+
     reset: function () {
+
+        this.aumentaVelocidade() 
+        raqueteDir.aumentaVelocidade()
+
         this.x = campo.largura / 2
         this.y = campo.altura / 2
     },
@@ -139,11 +147,17 @@ const raqueteDir = {
     altura: 200,
     x: campo.largura - larguraLinha - 10,
     y: 120,
-
+    velocidade: 1, 
     movimento: function () {
-        this.y = bola.y
+        if (this.y + this.altura / 2 < bola.y + bola.raio) {
+            this.y += this.velocidade
+        } else {
+            this.y -= this.velocidade
+        }
     },
-
+    aumentaVelocidade: function () {
+        this.velocidade += 1
+    },
     desenha: function () {
         canvasCtx.fillRect(this.x, this.y, this.largura, this.altura)
         this.movimento()
